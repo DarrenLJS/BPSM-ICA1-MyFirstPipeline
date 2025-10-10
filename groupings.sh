@@ -48,11 +48,11 @@ for file in ./groupings/*.txt; do
 done
 rm -f ./groupings/clone1.txt ./groupings/clone2.txt ./groupings/wt.txt
 echo "Grouping lists done!"
-# Using group_name.txt files, move *_count.txt files in bed_out_counts_clean dir to respective group_name dirs within the same parent dir
-# Input: group_name.txt files from groupings dir, and *_counts.txt files from bed_out_counts_clean dir
-# Output: Organised *_counts.txt files into respective group_name dirs in bed_out_counts_clean dir
+# Using group_name.txt files, move *_count.txt files in ./counts_data/bed_out_counts_clean dir to respective group_name dirs within the same parent dir
+# Input: ./groupings/group_name.txt files, and ./counts_data/bed_out_counts_clean/*_counts.txt files
+# Output: ./counts_data/bed_out_counts_clean/* dirs, containing organised *_counts.txt files
 echo "Organising counts files..."
-counts_dir=./bed_out_counts_clean
+counts_dir=./counts_data/bed_out_counts_clean
 for group in ./groupings/*.txt; do
   group_name=$(basename "${group}" ".txt")
   dest_dir="${counts_dir}/${group_name}"

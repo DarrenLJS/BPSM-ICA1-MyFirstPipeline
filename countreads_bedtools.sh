@@ -12,13 +12,14 @@ echo "Sorted Tcongolense bedfile obtained!"
 # Using bedtools coverage to count reads overlapping each gene in Tcongolense genome.
 # Using awk to only print useful cols (gene, geneid, description, counts)
 # Input: .bam files from HISAT2_out_BAM dir
-# Output: Raw *_bedout.txt count files in bed_out_counts dir, and cleaned *_counts.txt files in bed_out_counts_clean dir
+# Output: Raw ./counts_data/bed_out_counts/*_bedout.txt files, and cleaned ./counts_data/bed_out_counts_clean/*_counts.txt files
 echo "Generating counts data..."
-rm -rf bed_out_counts bed_out_counts_clean
-mkdir -p bed_out_counts bed_out_counts_clean
 in_dir=./HISAT2_out_BAM
-out_dir=./bed_out_counts
-counts_dir=./bed_out_counts_clean
+counts=./counts_data
+out_dir=./counts_data/bed_out_counts
+counts_dir=./counts_data/bed_out_counts_clean
+rm -rf ${counts}
+mkdir -p ${counts} ${out_dir} ${counts_dir}
 bed=./${basebed}_sorted.bed
 for bam in ${in_dir}/*.bam; do
   base=$(basename "${bam}" ".bam")

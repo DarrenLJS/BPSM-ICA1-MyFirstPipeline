@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 # Iterate through each dir in bed_out_counts_clean, use awk to merge the samples and calculate the mean count for each gene for each group (3/4 replicates)
-# Input: *_counts.txt files in each dir
-# Output: Mean count per gene per group_name.txt in meancount_per_gene dir
-rm -rf meancount_per_gene
-mkdir -p meancount_per_gene
-in_dir=./bed_out_counts_clean
+# Input: ./counts_data/bed_out_counts_clean/* dirs
+# Output: ./meancount_per_gene/*.txt files
+in_dir=./counts_data/bed_out_counts_clean
 out_dir=./meancount_per_gene
+rm -rf ${out_dir}
+mkdir -p ${out_dir}
 echo "Calculating mean per gene..."
 for dir in ${in_dir}/*; do
   base=$(basename "${dir}")

@@ -3,20 +3,21 @@
 rm -rf Tcongo_genome
 echo "Getting Tcongo genome..."
 cp -r /localdisk/data/BPSM/MyFirstPipeline/Tcongo_genome .
-FQ_1=./fq_1_trimmed
-FQ_2=./fq_2_trimmed
+FQ_1=./raw_data/fq_1_trimmed
+FQ_2=./raw_data/fq_2_trimmed
 gzip -d ./Tcongo_genome/*Tcongolense*.fasta.gz
 echo "Tcongo genome obtained"
-# Performing sequence alignment using HISAT2 for trimmed paired-end data (*_1_trimmed.fq and *_2_trimmed.fq) using reference Tcongo genome, piping output to samtools for formatting .bam files
+# Performing sequence alignment using HISAT2 for trimmed paired-end data (./raw_data/fq_1_trimmed/*_1_trimmed.fq and ./raw_data/fq_2_trimmed/*_2_trimmed.fq)
+# using reference Tcongo genome, piping output to samtools for formatting .bam files
 # Before alignment, have to build Tcongolense_index with HISAT2 using *Tcongolense*.fasta
-# Input: Reference *Tcongolense*.fasta, paired-end data (*_1_trimmed.fq and *_2_trimmed.fq) from respective fq_1_trimmed and fq_2_trimmed dir
+# Input: Reference *Tcongolense*.fasta, paired-end data (./raw_data/fq_1_trimmed/*_1_trimmed.fq and ./raw_data/fq_2_trimmed/*_2_trimmed.fq)
 # Output: .bam files in HISAT2_out_BAM dir
 echo "Performing alignment with HISAT2..."
 hisat2-build ./Tcongo_genome/*Tcongolense*.fasta ./Tcongo_genome/Tcongolense_index
 gene=./Tcongo_genome/Tcongolense_index
-rm -rf HISAT2_out_BAM
-mkdir -p HISAT2_out_BAM
 out_dir=./HISAT2_out_BAM
+rm -rf ${out_dir}
+mkdir -p ${out_dir}
 for file in ${FQ_1}/*_1_trimmed.fq; do
   base=$(basename "${file}" "_1_trimmed.fq")
   mate1=${file}
